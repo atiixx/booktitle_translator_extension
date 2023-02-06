@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "booktitle_translator",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "An extension to automatically detect book titles and translates it to a languagee you can define.",
+    "description": "The description of the application"
+  }
+}

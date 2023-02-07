@@ -10,6 +10,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
+      "scripts.babel/background.js"
     ]
   },
   "permissions": [
@@ -29,5 +30,9 @@
       "run_at": "document_end",
       "all_frames": false
     }
-  ]
+  ],
+  "web_accessible_resources": [
+    "app/scripts.babel/contentscript.js",
+    "app/scripts.babel/contentmain.js"
+ ]
 }

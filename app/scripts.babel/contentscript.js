@@ -8,9 +8,10 @@ async function searchForBook(title, author) {
     .then((response) => response.text())
     .then((response) => {
       var oData = JSON.parse(response);
-      return oData.items[0].volumeInfo.title;
+      console.log(oData);
+      return oData.items;
       //findGerman(oData);
-}).catch(console.log('No german version found.'));
+}).catch(error => console.error(error));
 }
 
 
@@ -24,12 +25,20 @@ function findGerman(data) {
 //Sucht die Seite nach Tags der diese Attribute und Attributswerte hat
 var title = document.querySelectorAll('[data-testid="bookTitle"]');
 var author = document.querySelectorAll('[data-testid="name"]');
-var ele, node, germanTitle;
+var ele, node, germanTitles;
 searchForBook(title[0].innerHTML, author[0].innerHTML).then(
 value => {
-germanTitle = value; 
+germanTitles = value; 
+var length = germanTitles.length;
+console.log(germanTitles);
 ele = document.createElement('p');
-ele.textContent ='🇩🇪 ' + germanTitle;
+ele.textContent = '🇩🇪 ';
+for(var i = 0; i < length; i++){
+  ele.textContent = ele.textContent + germanTitles[i].volumeInfo.title;
+  if(i == 5) {break};
+  if(i != length-1) {ele.textContent = ele.textContent + ' || '};
+}
+
 //fügt diesem Tag einen Text an
 title[0].parentNode.appendChild(ele);
 }).catch(console.log('Couldn\'t attach element'));

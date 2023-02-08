@@ -8,11 +8,6 @@
     "128": "images/icons8-deutschland-96.png"
   },
   "default_locale": "en",
-  "background": {
-    "scripts": [
-      "scripts.babel/background.js"
-    ]
-  },
   "permissions": [
     "https://www.goodreads.com/book/*"
   ],

@@ -1,11 +1,11 @@
 {
-  "name": "__MSG_appName__",
+  "name": "Booktitle Translator",
   "version": "0.0.1",
   "manifest_version": 2,
   "description": "Translate book titles!",
   "icons": {
-    "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
+    "16": "images/icons8-deutschland-96.png",
+    "128": "images/icons8-deutschland-96.png"
   },
   "default_locale": "en",
   "background": {
@@ -14,15 +14,12 @@
     ]
   },
   "permissions": [
-    "tabs",
-    "http://*/*",
-    "https://*/*"
+    "https://www.goodreads.com/book/*"
   ],
   "content_scripts": [
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "https://www.goodreads.com/book/*"
       ],
       "js": [
         "scripts.babel/contentscript.js"
@@ -32,7 +29,6 @@
     }
   ],
   "web_accessible_resources": [
-    "app/scripts.babel/contentscript.js",
-    "app/scripts.babel/contentmain.js"
+    "app/scripts.babel/contentscript.js"
  ]
 }

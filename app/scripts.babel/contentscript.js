@@ -1,24 +1,36 @@
 'use strict';
-
-
-const key = 'AIzaSyATKSUfldEqdknIrfiPOwFCx4NoEVL3zTI';
-
-console.log(searchForBook('The way of kings'));
-//Sucht die Seite nach Tags der diese Attribute und Attributswerte hat
-var test = document.querySelectorAll('[data-testid="bookTitle"]');
-//fügt diesem Tag einen Text an
-test[0].innerHTML = test[0].innerHTML + '🇩🇪 ein testitest';
-
-
-function searchForBook(title){
+async function searchForBook(title, author) {
   title = title.split(' ').join('+');
-  var url = 'https://www.googleapis.com/books/v1/volumes?q=' + title + '&key='+ key;
-  chrome.runtime.sendMessage( //goes to bg_page.js
-      url,
-      data => parseResponse(data) //your callback
-); 
-  }
-
-function parseResponse(data){
-  console.log(data);
+  author = author.split(' ').join('+');
+  var url = 'https://www.googleapis.com/books/v1/volumes?q=' + title + '+inauthor:' + author + '&langRestrict=de&orderBy=relevance';
+  var booktitle = '';
+  return await fetch(url)
+    .then((response) => response.text())
+    .then((response) => {
+      var oData = JSON.parse(response);
+      return oData.items[0].volumeInfo.title;
+      //findGerman(oData);
+}).catch(console.log('No german version found.'));
 }
+
+
+function findGerman(data) {
+  var gerArr = data.items.filter((item) => item.volumeInfo.language === 'de');
+  console.log('Deutscher Titel: ' + gerArr[0].volumeInfo.title);
+  return gerArr[0].volumeInfo.title;
+}
+
+
+//Sucht die Seite nach Tags der diese Attribute und Attributswerte hat
+var title = document.querySelectorAll('[data-testid="bookTitle"]');
+var author = document.querySelectorAll('[data-testid="name"]');
+var ele, node, germanTitle;
+searchForBook(title[0].innerHTML, author[0].innerHTML).then(
+value => {
+germanTitle = value; 
+ele = document.createElement('p');
+ele.textContent ='🇩🇪 ' + germanTitle;
+//fügt diesem Tag einen Text an
+title[0].parentNode.appendChild(ele);
+}).catch(console.log('Couldn\'t attach element'));
+
